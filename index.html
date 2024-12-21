@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Somali Design Center</title>
+  <style>
+      body {
+          font-family: 'Arial', sans-serif;
+          margin: 0;
+          padding: 0;
+          background: linear-gradient(135deg, #ff8c00, #ff6347); /* Colorful background gradient */
+          color: #fff;
+      }
+
+      /* Move the scrolling text to the top */
+      .scrolling-text {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          white-space: nowrap;
+          animation: scrollText 15s linear infinite;
+          font-size: 1.5rem;  /* Smaller font size */
+          font-weight: bold;
+          color: #ffcc00;
+          text-align: center;
+          z-index: 100;
+      }
+
+      @keyframes scrollText {
+          0% {
+              transform: translateX(100%);
+          }
+          100% {
+              transform: translateX(-100%);
+          }
+      }
+
+      header {
+          background-color: #333; /* New background color for the header */
+          color: white;
+          text-align: center;
+          padding: 40px;
+          position: relative;
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      }
+      header h1 {
+          font-size: 3rem;
+          margin: 0;
+      }
+      header p {
+          font-size: 1.5rem;
+          margin: 10px 0;
+          font-weight: 600;
+      }
+
+      nav {
+          background-color: #004d40;
+          color: white;
+          padding: 10px;
+          text-align: center;
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+      }
+      nav a {
+          text-decoration: none;
+          color: #ffcc00;
+          padding: 15px 20px;
+          margin: 0 10px;
+          font-weight: bold;
+          transition: all 0.3s ease;
+      }
+      nav a:hover {
+          background-color: #ff6347;
+          border-radius: 5px;
+          transform: scale(1.1);
+      }
+
+      /* Content sections */
+      section {
+          padding: 40px;
+          display: none;
+      }
+      .bio {
+          text-align: center;
+          background: linear-gradient(135deg, #ffcc00, #ff8c00);
+          padding: 40px;
+          border-radius: 10px;
+          box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+          margin-bottom: 40px;
+          position: relative;
+      }
+      .bio h2 {
+          font-size: 2.5rem;
+          margin-bottom: 10px;
+      }
+      .bio p {
+          font-size: 1.2rem;
+          line-height: 1.6;
+          color: #555;
+      }
+      .bio a {
+          text-decoration: none;
+          color: #008080;
+          font-weight: bold;
+      }
+      .contact {
+          background: linear-gradient(135deg, #4caf50, #81c784);
+          color: white;
+          text-align: center;
+          padding: 40px;
+          border-radius: 10px;
+          box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+      }
+      .contact h2 {
+          font-size: 2.5rem;
+          margin-bottom: 10px;
+      }
+      .contact p {
+          font-size: 1.2rem;
+      }
+      footer {
+          text-align: center;
+          padding: 20px;
+          background-color: #333;
+          color: white;
+          font-size: 1rem;
+          margin-top: 40px;
+          box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.2);
+      }
+      footer a {
+          color: #ffcc00;
+          text-decoration: none;
+      }
+      footer a:hover {
+          text-decoration: underline;
+      }
+
+      /* Gallery styles */
+      .gallery {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+      }
+      .gallery img {
+          width: 300px;
+          height: 300px;
+          object-fit: cover;
+          border-radius: 10px;
+          margin: 10px;
+          box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+          transition: transform 0.3s ease-in-out;
+      }
+      .gallery img:hover {
+          transform: scale(1.1);
+      }
+
+      /* Chatbox styles */
+      .chatbox {
+          position: fixed;
+          bottom: 20px;
+          right: 20px;
+          width: 300px;
+          background-color: white;
+          border-radius: 10px;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+          padding: 10px;
+          display: none;
+          flex-direction: column;
+          z-index: 1000;
+          font-family: 'Arial', sans-serif;
+      }
+      .chatbox-header {
+          background-color: #008080;
+          color: white;
+          padding: 10px;
+          text-align: center;
+          border-radius: 10px 10px 0 0;
+          cursor: move;
+      }
+      .chatbox-header .close-btn {
+          color: white;
+          background: none;
+          border: none;
+          font-size: 18px;
+          cursor: pointer;
+          float: right;
+      }
+      .chatbox-messages {
+          height: 200px;
+          overflow-y: auto;
+          padding: 5px;
+          background-color: #f0f0f0;
+          margin-bottom: 10px;
+          border-radius: 10px;
+          font-size: 1rem;
+          color: #333;
+          line-height: 1.6;
+      }
+      .typing-indicator {
+          color: gray;
+          font-style: italic;
+          margin-bottom: 5px;
+          display: none;
+      }
+      .chatbox-input {
+          display: flex;
+          justify-content: space-between;
+      }
+      .chatbox-input input {
+          width: 80%;
+          padding: 8px;
+          border-radius: 5px;
+          border: 1px solid #ccc;
+      }
+      .chatbox-input button {
+          background-color: #008080;
+          color: white;
+          padding: 8px;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+      }
+      .chatbox-input button:hover {
+          background-color: #006f6f;
+      }
+
+/* Button to open/close the chatbox */
+.chatbox-toggle-btn {
+    position: fixed;
+    bottom: 10px;  /* Adjusted to place the button closer to the bottom edge */
+    right: 10px;   /* Adjusted to place the button closer to the right edge */
+    background-color: #008080;
+    color: white;
+    border-radius: 50%;
+    padding: 8px;  /* Reduced padding to make it smaller */
+    font-size: 16px;  /* Reduced font size */
+    cursor: pointer;
+    z-index: 1001;
+}
+
+/* Label for the chatbox button */
+.chatbox-toggle-label {
+    position: fixed;
+    bottom: 50px;  /* Adjusted for positioning the label just above the button */
+    right: 10px;   /* Positioned at the right edge */
+    background-color: #008080;
+    color: white;
+    border-radius: 5px;
+    padding: 6px 12px;  /* Reduced padding */
+    font-size: 12px;  /* Reduced font size */
+    text-align: center;
+    cursor: pointer;
+}
+
+      /* Animation for alternating the About Me paragraphs */
+      @keyframes paragraphAnimation {
+          0% {
+              opacity: 1;
+          }
+          50% {
+              opacity: 0;
+          }
+          100% {
+              opacity: 1;
+          }
+      }
+
+      /* Apply animation to the paragraph */
+      .bio p {
+          animation: paragraphAnimation 8s infinite;
+      }
+
+      .bio p:nth-child(1) {
+          animation-delay: 0s; /* First paragraph appears first */
+      }
+
+      .bio p:nth-child(2) {
+          animation-delay: 4s; /* Second paragraph appears after 4 seconds */
+      }
+
+      /* Responsive Design - For Tablets and Smaller Screens */
+      @media (max-width: 768px) {
+          header h1 {
+              font-size: 2rem;
+          }
+          header p {
+              font-size: 1rem;
+          }
+          .bio h2, .contact h2 {
+              font-size: 2rem;
+          }
+          .bio p, .contact p {
+              font-size: 1rem;
+          }
+          .gallery img {
+              width: 100%;
+              height: auto;
+          }
+          nav a {
+              padding: 10px;
+              margin: 5px;
+          }
+          .scrolling-text {
+              font-size: 1.2rem;
+          }
+      }
+
+      /* Responsive Design - For Mobile Screens */
+      @media (max-width: 480px) {
+          header h1 {
+              font-size: 1.5rem;
+          }
+          header p {
+              font-size: 1rem;
+          }
+          .bio h2, .contact h2 {
+              font-size: 1.8rem;
+          }
+          .bio p, .contact p {
+              font-size: 0.9rem;
+          }
+          nav a {
+              font-size: 0.9rem;
+              padding: 8px;
+              margin: 5px;
+          }
+          .gallery img {
+              width: 100%;
+              height: auto;
+          }
+          .chatbox {
+              width: 250px;
+          }
+          .chatbox-toggle-btn {
+              right: 5px;
+          }
+      }
+      /* General section padding adjustments for mobile */
+/* General section padding adjustments for mobile */
+section {
+    padding: 20px; /* Reduced padding for smaller screens */
+    box-sizing: border-box; /* Ensure padding does not affect layout */
+}
+
+/* Body and overall layout */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensures the body takes up at least the full height */
+}
+
+/* About Me Section */
+.bio {
+    text-align: center;
+    background: linear-gradient(135deg, #ffcc00, #ff8c00);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    margin-bottom: 30px;
+    position: relative;
+}
+
+/* Clothing Designs Section */
+#clothing .gallery,
+#gallery .gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Flexible grid */
+    gap: 15px;
+    justify-items: center;
+    padding: 0 20px; /* Ensures images don't stick to edges */
+}
+
+#clothing .gallery img,
+#gallery .gallery img {
+    width: 100%; /* Ensure the images scale properly */
+    height: 200px; /* Fixed height for uniformity */
+    object-fit: cover; /* Crop and maintain aspect ratio */
+    border-radius: 10px;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Contact Section */
+.contact {
+    background: linear-gradient(135deg, #4caf50, #81c784);
+    color: white;
+    text-align: center;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    margin: 30px auto;
+}
+
+/* General navigation and layout adjustments */
+nav {
+    display: flex;
+    justify-content: center;
+    background-color: #004d40;
+    padding: 10px 0;
+}
+
+nav a {
+    text-decoration: none;
+    color: #ffcc00;
+    padding: 10px 20px;
+    margin: 0 5px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+}
+
+nav a:hover {
+    background-color: #ff6347;
+    border-radius: 5px;
+    transform: scale(1.1);
+}
+
+/* Scrolling Text Adjustments */
+.scrolling-text {
+    font-size: 1.5rem;
+}
+
+/* Responsive Design - For Tablets and Smaller Screens */
+@media (max-width: 768px) {
+    /* Header adjustments */
+    header h1 {
+        font-size: 2rem;
+    }
+    header p {
+        font-size: 1.1rem;
+    }
+
+    /* Bio Section (About Me) adjustments */
+    .bio h2 {
+        font-size: 2.2rem;
+    }
+    .bio p {
+        font-size: 1rem;
+    }
+
+    /* Gallery Image Adjustments */
+    .gallery img {
+        width: 100%;
+        height: auto;
+    }
+
+    /* Navigation link adjustments */
+    nav a {
+        padding: 10px;
+        font-size: 1rem;
+    }
+
+    /* Chatbox and Button adjustments */
+    .chatbox {
+        width: 90%; /* Take more space on mobile */
+        bottom: 10px;
+        right: 10px;
+        left: 5%;
+        position: fixed; /* Ensure chatbox stays in place */
+    }
+
+    .chatbox-toggle-btn {
+        padding: 8px;
+        font-size: 16px;
+    }
+
+    /* Scroll text adjustments */
+    .scrolling-text {
+        font-size: 1.2rem;
+    }
+}
+
+/* Responsive Design - For Mobile Screens */
+@media (max-width: 480px) {
+    /* Header adjustments */
+    header h1 {
+        font-size: 1.5rem;
+    }
+    header p {
+        font-size: 1rem;
+    }
+
+    /* Bio and Contact Section adjustments */
+    .bio h2, .contact h2 {
+        font-size: 1.8rem; /* Make headings smaller */
+    }
+    .bio p, .contact p {
+        font-size: 0.9rem; /* Reduce text size for better readability */
+    }
+
+    /* Gallery Image Adjustments */
+    .gallery img {
+        width: 100%; /* Ensure images scale appropriately */
+        height: auto;
+    }
+
+    /* Navigation link adjustments */
+    nav a {
+        font-size: 0.9rem;
+        padding: 8px;
+    }
+
+    /* Chatbox adjustments */
+    .chatbox {
+        width: 90%; /* Chatbox takes more space */
+        bottom: 10px;
+        left: 5%;
+        position: fixed;
+        z-index: 9999; /* Ensure chatbox is above all other content */
+    }
+
+    .chatbox-toggle-btn {
+        padding: 8px;
+        font-size: 14px;
+    }
+
+    .chatbox-toggle-label {
+        padding: 6px 12px;
+        font-size: 12px;
+    }
+
+    /* Section adjustments */
+    section {
+        padding: 15px; /* Reduce padding for better spacing */
+    }
+
+    .contact p {
+        font-size: 0.9rem; /* Reduce text size for mobile */
+    }
+
+    /* Adjust section headings */
+    section h2 {
+        font-size: 1.6rem;
+    }
+
+    /* Scroll text adjustments */
+    .scrolling-text {
+        font-size: 1.2rem;
+    }
+}
+
+/* Fixing extra empty spaces on laptop screens */
+@media (min-width: 1024px) {
+    body {
+        margin: 0;
+        padding: 0;
+    }
+
+    section {
+        padding: 40px; /* Larger padding on bigger screens */
+    }
+
+    .container {
+        width: 100%;
+        max-width: 1200px; /* Avoid extra spaces, and constrain max width */
+        margin: 0 auto;
+    }
+
+    /* For larger screens, make sure images don't stretch too wide */
+    #clothing .gallery img,
+    #gallery .gallery img {
+        max-width: 100%; /* Don't allow images to exceed container width */
+        height: 200px; /* Fixed height for consistency */
+    }
+
+    /* Ensure the chatbox visibility on all screen sizes */
+    .chatbox {
+        width: 300px; /* Fix width on larger screens */
+        bottom: 10px;
+        right: 10px;
+    }
+}
+
+  </style>
+</head>
+<body>
+  <!-- Scrolling Welcome Text -->
+  <div class="scrolling-text">
+      Welcome to Somali Design center - Where Creativity Meets Innovation! 🎨👕✨
+  </div>
+
+  <header>
+      <h1>Somali Design Center</h1>
+      <p>Your One-Stop Destination for Custom Clothing and Utensil Designs</p>
+  </header>
+
+  <nav>
+      <a href="javascript:void(0);" onclick="showPage('bio')">About Me</a>
+      <a href="javascript:void(0);" onclick="showPage('clothing')">Clothing Designs</a>
+      <a href="javascript:void(0);" onclick="showPage('gallery')">Utensil Designs</a>
+      <a href="javascript:void(0);" onclick="showPage('contact')">Contact Me</a>
+  </nav>
+
+  <!-- About Me Section -->
+  <section id="bio" class="bio" style="display: block;">
+      <h2>About Me and the Design</h2>
+      <p>
+          Hello, I'm Mohamed Hashi, a professional designer with a focus on both clothing and utensil designs, including custom phone cases, laptop covers, and more. 
+          I have always been fascinated by creating visual art that complements personal style. Whether it’s a t-shirt or a phone case, I aim to make every design unique and personalized.
+      </p>
+      <p>
+          Somali Design Center specializes in creating unique and innovative designs for both clothing and utensils. Our clothing range spans from casual streetwear to bespoke fashion, 
+          while our utensil designs include custom mugs, phone cases, laptop covers, water bottles, notebooks, and more. We aim to transform everyday items into artistic expressions 
+          that reflect personality, style, and Somali heritage. Whether it’s through wearable fashion or personalized utensils, Somali Design Hub is here to collaborate and bring your 
+          vision to life with creativity and cultural pride.
+      </p>
+  </section>
+
+  <!-- Clothing Designs Section -->
+  <section id="clothing" style="display: none;">
+      <h2 style="text-align: center; color: #333;">Clothing Design Gallery</h2>
+      <div class="gallery">
+          <img src="1.png" width='3000' alt="Clothing Design 1">
+          <img src="2.png" width='3000' alt="Clothing Design 2">
+          <img src="9.png" width='3000' alt="Clothing Design 3">
+          <img src="4.jpg" width='300' alt="Clothing Design 4">
+      </div>
+  </section>
+
+  <!-- Utensil Designs Gallery -->
+  <section id="gallery" style="display: none;">
+      <h2 style="text-align: center; color: #333;">Utensil Design Gallery</h2>
+      <div class="gallery">
+          <img src="utensil1.png" width='300' alt="Phone Case Design 1">
+          <img src="10.png" width='300' alt="Phone Case Design 2">
+          <img src="utensil3.jpg" width='300' alt="Phone Case Design 3">
+          <img src="chair.webp" width='300' alt="Phone Case Design 3">
+      </div>
+  </section>
+
+  <!-- Contact Me Section -->
+  <section id="contact" class="contact">
+      <h2>Contact Information</h2>
+      <p>
+          I would love to hear from you! If you have a design in mind or need something unique, feel free to reach out to me.
+          Let’s work together to create something extraordinary.
+      </p>
+      <p>Email: <a href="mailto:your-email@example.com">mhashi7788@gmail.com</a></p>
+      <p>Phone: +252633232242</p>
+      <p>Follow me on social media:
+          <a href="https://www.instagram.com" target="_blank">Instagram</a> |
+          <a href="https://www.linkedin.com/in/mohamed-hashi" target="_blank">LinkedIn</a>
+      </p>
+  </section>
+
+  <footer>
+      <p>&copy; 2024 Somali Design Center. All rights reserved. | <a href="terms.html">Terms & Conditions</a></p>
+  </footer>
+
+  <!-- Chatbox Code -->
+  <div class="chatbox" id="chatbox">
+      <div class="chatbox-header">
+          <span>Chat with Us</span>
+          <button class="close-btn" onclick="closeChat()">×</button>
+      </div>
+      <div class="chatbox-messages" id="chatbox-messages">
+          <div class="typing-indicator" id="typing-indicator">Bot is typing...</div>
+      </div>
+      <div class="chatbox-input">
+          <input type="text" id="chat-input" placeholder="Ask a question...">
+          <button onclick="sendMessage()">Send</button>
+      </div>
+  </div>
+
+  <button class="chatbox-toggle-btn" onclick="toggleChat()">💬</button>
+  <div class="chatbox-toggle-label" onclick="toggleChat()">Chat</div>
+
+<script>
+    let currentPage = "bio";
+
+    function showPage(pageId) {
+        // Hide all sections
+        document.querySelectorAll('section').forEach(section => {
+            section.style.display = 'none';
+        });
+
+        // Show the selected section
+        document.getElementById(pageId).style.display = 'block';
+    }
+
+   // Function to open the chatbox and hide the toggle button
+function openChat() {
+    document.getElementById("chatbox").style.display = "flex"; // Show the chatbox
+    document.querySelector(".chatbox-toggle-btn").style.display = "none"; // Hide the toggle button
+    document.querySelector(".chatbox-toggle-label").style.display = "none"; // Hide the toggle label
+}
+
+// Function to close the chatbox and show the toggle button
+function closeChat() {
+    document.getElementById("chatbox").style.display = "none"; // Hide the chatbox
+    document.querySelector(".chatbox-toggle-btn").style.display = "block"; // Show the toggle button
+    document.querySelector(".chatbox-toggle-label").style.display = "block"; // Show the toggle label
+}
+
+// For Chatbox Toggle
+function toggleChat() {
+    const chatbox = document.getElementById("chatbox");
+    if (chatbox.style.display === "none" || chatbox.style.display === "") {
+        openChat(); // Open the chatbox
+    } else {
+        closeChat(); // Close the chatbox
+    }
+}
+
+function sendMessage() {
+    const message = document.getElementById("chat-input").value;
+    if (message) {
+        const messageElement = document.createElement("div");
+        messageElement.textContent = "You: " + message;
+        document.getElementById("chatbox-messages").appendChild(messageElement);
+
+        // Simulate bot response with delay
+        document.getElementById("typing-indicator").style.display = "block";
+        setTimeout(() => {
+            document.getElementById("typing-indicator").style.display = "none";
+
+            // Check for keywords and respond accordingly
+            const botMessage = getBotResponse(message);
+            const botMessageElement = document.createElement("div");
+            botMessageElement.textContent = "Bot: " + botMessage;
+            document.getElementById("chatbox-messages").appendChild(botMessageElement);
+        }, 2000);
+    }
+}
+
+// Function to check the message and generate the bot's response
+function getBotResponse(message) {
+    const lowerCaseMessage = message.toLowerCase();
+
+    // Keyword detection and appropriate responses
+    if (lowerCaseMessage.includes('design') || lowerCaseMessage.includes('designs') || lowerCaseMessage.includes('design')) {
+        if (lowerCaseMessage.includes('clothing') || lowerCaseMessage.includes('cloth')) {
+            return "Our clothing designs range from casual streetwear to bespoke fashion. Whether you’re looking for something comfortable or stylish, we can create a unique design tailored to your needs. We strive to reflect Somali culture through our clothing, making each piece not only fashionable but meaningful.";
+        } else if (lowerCaseMessage.includes('utensil') || lowerCaseMessage.includes('utensils')) {
+            return "We also specialize in designing custom utensils such as mugs, phone cases, laptop covers, water bottles, and more. Each utensil design is crafted to match your personal style and preferences while incorporating cultural elements. Whether you're looking for something practical or decorative, we can create it for you.";
+        } else {
+            return "Our design services cover a wide range of products, from clothing to utensils. If you're interested in a specific design, feel free to ask about clothing or utensil designs!";
+        }
+    } else {
+        return "Thanks for reaching out! Please ask about our clothing or utensil designs, and I’ll be happy to help.";
+    }
+}
+</script>
+
+</body>
+</html>
+
+
+
+
+
